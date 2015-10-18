@@ -56,7 +56,7 @@ jetpl 的编译渲染速度是著名的 jQuery 作者 John Resig 开发的 tmpl 
 
 **查看性能测试**
 
-* [查看模板演示](http://singod.github.io/jetpl/test/test.html) 
+* [查看性能测试](http://singod.github.io/jetpl/test/test.html) 
 
 ============
 
