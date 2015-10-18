@@ -1,11 +1,6 @@
 h1,h2,h3,h4,h5,h6,button,input,select,textarea{font-size:100%; font-weight:normal; font-style:normal;}
 ul,ol,li,dl{list-style-type:none;}         i,em{font-style:normal}     svg:not(:root){overflow:hidden}
 img{vertical-align:middle;border:0;-ms-interpolation-mode:bicubic;-webkit-tap-highlight-color:rgba(0,0,0,0);}   
-a{color:#333;text-decoration: none;outline:none;} 
-a:link {color:#333;} 
-a:visited {color:#333;} 
-a:hover {color:#c00;text-decoration:underline;}
-a:active{blr:expression(this.onFocus=this.blur())}
 .tc{text-align:center;}
 .f0{font-size:0;}  .f12{font-size:12px;}  .f14{font-size:14px;} .f16{font-size:16px;}  .f18{font-size:18px;}  .f20{font-size:20px;}   .f22{font-size:22px;} 
 .f24{font-size:24px;}   .f26{font-size:26px;}   .f28{font-size:28px;}   .f30{font-size:30px;} 
