@@ -30,9 +30,20 @@ jetpl.js
 ============
 **查看演示**
 
-[查看模板演示](http://singod.github.io/jetpl/)   
+* [查看模板演示](http://singod.github.io/jetpl/)   
 
 **下载**
 
 * [jetpl.js](https://github.com/singod/jetpl/blob/gh-pages/js/jetpl.js) *(原生语法, 2.7kb)*
+
+============
+
+## 语法
+
+字段 | 类型 | 值| 说明
+------------ | ------------- | ------------ | ------------
+openTag | String | ``<%`` | 逻辑语法开始标签
+closeTag | String | ``%>`` | 逻辑语法结束标签
+valueTag | String | ``<%=`` | 输出变量开始标签
+valueTag | String | ``%>`` | 输出变量结束标签
 
