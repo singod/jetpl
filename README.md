@@ -30,5 +30,9 @@ jetpl.js
 ============
 **查看演示**
 
-[查看模板演示](http://singod.github.io/jetpl/)
+[查看模板演示](http://singod.github.io/jetpl/)   
+
+**下载**
+
+* [jetpl.js](https://github.com/singod/jetpl/blob/gh-pages/js/jetpl.js) *(原生语法, 2.7kb)*
 
