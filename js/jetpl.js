@@ -54,11 +54,11 @@
             return tool.error(e, tpl);
         }
     };
-    tpm.prototype.compile = function() {
+    tpm.prototype.compile = function(data) {
         var that = this;
-        var run = function(d, f) {
+        var run = function(data) {
             run.tps = run.tps || new Function(tmpl(that.tpl));
-            return run.tps.apply(d);
+            return run.tps.apply(data);
         };
         return run;
     };
