@@ -12,4 +12,5 @@ a:active{blr:expression(this.onFocus=this.blur())}
 .fmy{font-family:'Microsoft Yahei',"\u5fae\u8f6f\u96c5\u9ed1","\5b8b\4f53",Arial;}
 .far{font-family:Arial,"\5b8b\4f53", sans-serif;}
 .warpbox{max-width:1000px; height:auto!important;margin-left:auto; margin-right:auto; line-height:1.5;background-color: #fff; padding:30px 22px;box-shadow: 0px 2px 4px #aaa;}
+.test ul{margin:0;padding:0;}
 .test li{ line-height:40px; border-bottom:1px #ccc dashed;}
