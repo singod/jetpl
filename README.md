@@ -1,6 +1,7 @@
 jetpl.js
 =======
 # 快速上手
+* [查看模板详细API](http://www.jayui.com/jetpl/)  
 
 **编写模板**
 
