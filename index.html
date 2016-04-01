@@ -26,22 +26,77 @@
      <div class="test">
           <ul id="testid"></ul>
      </div>
+     <div class="test" style="margin-top:45px;">
+     <ul id="view"></ul>
+     </div>
+     <div class="test"  style="margin-top:25px;" id="content"></div>
 </div>
-<script id="testData" type="text/html">
-    <h4 class="f18">标题: <%= intro %></h4>
-    <% for (var j=0;j<list.length;j++) { %>
-		<% for (var i=0;i<list[j].childmenu.length;i++) { %>
-			<li><%= j %>. <%= list[j].childmenu[i].name %> - <%= list[j].childmenu[i].id %> ---- <%= test(j)+vs %></li>
-			<!--<p><%= list[j].childmenu[i].content||"暂无内容" %></p>-->
-		<% } %>
-	<% } %>
-
+<script id="rutest" type="text/tpl">
+<h1 class="f18"><%title%></h1>
+<% jetpl.include('#rulist',rudata) %>
+</script>
+<script id="rulist" type="text/tpl">
+<ul>
+    <%# for (var i = 0; i < list.length; i ++) { %>
+        <li>索引 <% i + 1 %> ：<% list[i] %></li>
+    <%# } %>
+</ul>
 </script>
 
+<script id="testData" type="text/tpl">
+    <h2 class="f18">标题: <% intro %></h2>
+	<p><% jetpl.conver(desc,"escape") %></p>
+	<p><% sex==2 ? '男': '女' %></p>
+	<%# var vs=100; %>
+    <%# for (var i=0;i<list.length;i++) { %>
+		<%# for (var k=0;k<list[i].childmenu.length;k++) { %>
+			<li><% i %>. <% list[i].childmenu[k].name %> --- 
+			    ID：<% list[i].childmenu[k].id %> ---- 
+			    时间：<% jetpl.conver(list[i].childmenu[k].time,"date","YYYY-MM-DD h:m:s") %>
+			</li>	
+		<%# } %>
+	<%# } %>
+
+</script>
+<script id="list" type="text/tpl">
+<h2  class="f18"><% jetpl.conver(intro,"uppercase") %></h2>
+
+<ul>
+    <%# var vs='(循环)'; %>
+    <%@ list val i%>
+	<%@ val.childmenu vals k%>
+    <li>
+        <span><%i%>. </span>
+        <span>标题: <%vals.name%>---- &nbsp;&nbsp;&nbsp;</span>
+        <span>ID： <% vals.id %> ---- &nbsp;&nbsp;&nbsp;</span>
+		<span>time： <% jetpl.conver(vals.time,"date","YYYY-MM-DD") %>  &nbsp;&nbsp;&nbsp;<%vs%></span>
+    </li>
+    <%@%>
+	<%@%>
+</ul>
+</script>
 <script type="text/javascript">
-var vs=100;
+var rudata = {
+	title: '嵌入子模板',
+	list: ['文艺', '博客', '摄影', '电影', '民谣', '旅行', '吉他']
+};
+var onedata = {
+    title: "abc",
+    list: [
+        {name: "乱码",       city: "杭州", post: "前端", time: 1435650377},
+        {name: "冰花",       city: "北京", post: "水军", time: 1435650377},
+        {name: "高琦",       city: "福建", post: "水军", time: 1435650377},
+        {name: "银狐",       city: "汕头", post: "前端", time: 1435650377},
+        {name: "辛巴",       city: "深圳", post: "前端", time: 1435650377},
+        {name: "龙秋明",     city: "北京", post: "前端", time: 1435650377},
+        {name: "小麒麟",     city: "北京", post: "前端", time: 1435650377},
+        {name: "秋天的落叶", city: "广东", post: "前端", time: 1435650377}
+    ]
+};
 var data = {
-	intro: '一群码js的骚年，幻想改变世界，却被世界改变。',
+	intro: '一群码javascript的骚年，幻想改变世界，却被世界改变。',
+	desc:"<u>html代码</u> <em>em</em>",
+	sex:1,
 	list:[
         {
             "name": "美妆",
@@ -50,22 +105,22 @@ var data = {
                 {
                     "fullName": "面部护理",
                     "id": 52,
-                    "name": "面部护理"
+                    "name": "面部护理", time: 1435650377
                 },
                 {
                     "fullName": "面膜",
                     "id": 69,
-                    "name": "面膜"
+                    "name": "面膜", time: 1435650377
                 },
                 {
                     "fullName": "身体护理",
                     "id": 54,
-                    "name": "身体护理"
+                    "name": "身体护理", time: 1435650377
                 },
                 {
                     "fullName": "彩妆",
                     "id": 53,
-                    "name": "彩妆"
+                    "name": "彩妆", time: 1435650377
                 }
             ]
         },
@@ -76,27 +131,27 @@ var data = {
                 {
                     "fullName": "纸尿裤",
                     "id": 56,
-                    "name": "纸尿裤"
+                    "name": "纸尿裤", time: 1435650377
                 },
                 {
                     "fullName": "奶粉",
                     "id": 71,
-                    "name": "奶粉"
+                    "name": "奶粉", time: 1435650377
                 },
                 {
                     "fullName": "辅食",
                     "id": 60,
-                    "name": "辅食"
+                    "name": "辅食", time: 1435650377
                 },
                 {
                     "fullName": "用具",
                     "id": 70,
-                    "name": "用具"
+                    "name": "用具", time: 1435650377
                 },
                 {
                     "fullName": "洗护/口腔",
                     "id": 58,
-                    "name": "护肤洗浴"
+                    "name": "护肤洗浴", time: 1435650377
                 }
             ]
         },
@@ -107,22 +162,22 @@ var data = {
                 {
                     "fullName": "头发护理",
                     "id": 61,
-                    "name": "头发护理"
+                    "name": "头发护理", time: 1435650377
                 },
                 {
                     "fullName": "沐浴用品",
                     "id": 73,
-                    "name": "沐浴用品"
+                    "name": "沐浴用品", time: 1435650377
                 },
                 {
                     "fullName": "口腔护理",
                     "id": 72,
-                    "name": "口腔护理"
+                    "name": "口腔护理", time: 1435650377
                 },
                 {
                     "fullName": "女士用品",
                     "id": 63,
-                    "name": "女士用品"
+                    "name": "女士用品", time: 1435650377
                 }
             ]
         },
@@ -133,41 +188,49 @@ var data = {
                 {
                     "fullName": "健康食品",
                     "id": 66,
-                    "name": "健康食品"
+                    "name": "健康食品", time: 1435650377
                 },
                 {
                     "fullName": "计生用品",
                     "id": 67,
-                    "name": "计生用品"
+                    "name": "计生用品", time: 1435650377
                 },
                 {
                     "fullName": "维他命",
                     "id": 74,
-                    "name": "维他命"
+                    "name": "维他命", time: 1435650377
                 },
                 {
                     "fullName": "身体调理",
                     "id": 75,
-                    "name": "身体调理"
+                    "name": "身体调理", time: 1435650377
                 },
                 {
                     "fullName": "眼部护理",
                     "id": 76,
-                    "name": "眼部护理"
+                    "name": "眼部护理", time: 1435650377
                 }
             ]
         }
     ]
 }
 
-function test(i){return i*2}
-
 var gethtml = document.getElementById('testData').innerHTML
-
 jetpl(gethtml).render(data, function(html){
 	document.getElementById('testid').innerHTML = html
 });
 
+
+var getlist = document.getElementById('list').innerHTML
+jetpl(getlist).render(data, function(html){
+	document.getElementById('view').innerHTML = html
+});
+
+
+var rulist = document.getElementById('rutest').innerHTML
+jetpl(rulist).render(rudata, function(html){
+	document.getElementById('content').innerHTML = html
+});
 </script>
   </body>
 </html>
