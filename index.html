@@ -24,56 +24,54 @@
 
 <div class="warpbox fmy">
      <div class="test">
+          <h1 class="tc f24" style="margin-bottom:25px;">jetpl模板引擎--演示</h1>
           <ul id="testid"></ul>
      </div>
+
      <div class="test" style="margin-top:45px;">
      <ul id="view"></ul>
      </div>
      <div class="test"  style="margin-top:25px;" id="content"></div>
 </div>
-<script id="rutest" type="text/tpl">
-<h1 class="f18"><%title%></h1>
-<% jetpl.include('#rulist',rudata) %>
-</script>
-<script id="rulist" type="text/tpl">
-<ul>
-    <%# for (var i = 0; i < list.length; i ++) { %>
-        <li>索引 <% i + 1 %> ：<% list[i] %></li>
-    <%# } %>
-</ul>
-</script>
-
 <script id="testData" type="text/tpl">
-    <h2 class="f18">标题: <% intro %></h2>
-	<p><% jetpl.conver(desc,"escape") %></p>
-	<p><% sex==2 ? '男': '女' %></p>
-	<%# var vs=100; %>
-    <%# for (var i=0;i<list.length;i++) { %>
-		<%# for (var k=0;k<list[i].childmenu.length;k++) { %>
-			<li><% i %>. <% list[i].childmenu[k].name %> --- 
-			    ID：<% list[i].childmenu[k].id %> ---- 
-			    时间：<% jetpl.conver(list[i].childmenu[k].time,"date","YYYY-MM-DD h:m:s") %>
+    <h2 class="f18">标题: <p onclick="go('<%= intro %>')"></p></h2>
+	<p><%= jetpl.escape(desc) %></p>
+	<p><%= sex==2 ? '男': '女' %></p>
+	<% var vs=100; %>
+    <% for (var i=0;i<list.length;i++) { %>
+		<% for (var k=0;k<list[i].childmenu.length;k++) { %>
+			<li><%= i %>. <%= list[i].childmenu[k].name %> --- ID：<%= list[i].childmenu[k].id %> ---- 时间：<%= jetpl.date(list[i].childmenu[k].time,"YYYY-MM-DD h:m:s") %>
 			</li>	
-		<%# } %>
-	<%# } %>
+		<% } %>
+	<% } %>
 
 </script>
 <script id="list" type="text/tpl">
-<h2  class="f18"><% jetpl.conver(intro,"uppercase") %></h2>
+<h2  class="f18"><% intro %></h2>
 
 <ul>
-    <%# var vs='(循环)'; %>
-    <%@ list val i%>
-	<%@ val.childmenu vals k%>
-    <li>
-        <span><%i%>. </span>
-        <span>标题: <%vals.name%>---- &nbsp;&nbsp;&nbsp;</span>
-        <span>ID： <% vals.id %> ---- &nbsp;&nbsp;&nbsp;</span>
-		<span>time： <% jetpl.conver(vals.time,"date","YYYY-MM-DD") %>  &nbsp;&nbsp;&nbsp;<%vs%></span>
-    </li>
-    <%@%>
-	<%@%>
+    <% var vs='(each循环)'; %>
+    {{each list val i}}
+	    {{each val.childmenu vals k}}
+		    <li>
+			<span><%=i%>. </span>
+			<span>标题: <%=vals.name%>---- &nbsp;&nbsp;&nbsp;</span>
+			<span>ID： <%= vals.id %> ---- &nbsp;&nbsp;&nbsp;</span>
+			<span>time： <%= jetpl.date(vals.time,"YYYY-MM-DD") %>  &nbsp;&nbsp;&nbsp;<%=vs%></span>	
+			</li>
+		{{/each}}
+	{{/each}}
 </ul>
+</script>
+<script id="contentData" type="text/tpl">
+    <h2 class="f18">标题: <%= title %></h2>
+
+    <% for (var i=0;i<list.length;i++) { %>
+
+			<span><%= i %>. <%= list[i] %> &nbsp;&nbsp;</span>	
+
+	<% } %>
+
 </script>
 <script type="text/javascript">
 var rudata = {
@@ -221,14 +219,11 @@ jetpl(gethtml).render(data, function(html){
 });
 
 
-var getlist = document.getElementById('list').innerHTML
-jetpl(getlist).render(data, function(html){
+jetpl('#list').render(data, function(html){
 	document.getElementById('view').innerHTML = html
 });
 
-
-var rulist = document.getElementById('rutest').innerHTML
-jetpl(rulist).render(rudata, function(html){
+jetpl('#contentData').render(rudata, function(html){
 	document.getElementById('content').innerHTML = html
 });
 </script>
