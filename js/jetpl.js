@@ -1,8 +1,8 @@
 /*
 
- @Name：jetpl v1.2 JS模板引擎
+ @Name：jetpl v1.3 JS模板引擎
  @Author：陈国军
- @Date：2016-7-2
+ @Date：2016-11-2
  @QQ群：516754269
  @官网：http://www.jayui.com/jetpl/  或　 https://github.com/singod/jetpl　
         
@@ -22,7 +22,12 @@
             var error = "jetpl ";
             typeof console === "object" && console.error(error + e + "\n" + (tlog || ""));
             return error + e;
-        }
+        },
+		keys : function (obj){
+			var arr = [];
+			for(arr[arr.length] in obj);
+			return arr ;
+		}
     },
     cores = function (tpl) {
         var that = this;
@@ -40,7 +45,7 @@
             // html
             .replace(/(^|%>|}})([\s\S]*?)({{|<%|$)/g, function(tp, tp1, tp2, tp3) {
                 // html => js string 转义 ' \ \n
-                return tp1 + 'outStr+= "' + tp2.replace(/^\s+|\s+$/g, "").replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\r?\n/g, '\\n') + '";\n' + tp3
+                return tp1 + 'outStr+= "' + tp2.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\r?\n/g, '\\n') + '";\n' + tp3
             })
             // <%= %>
             .replace(/(<%=)([\s\S]*?)(%>)/g, 'outStr+= ($2);\n') // <%= %>  [\s\S]允许换行
@@ -66,9 +71,10 @@
         code = 'var outStr="";\n' + code + 'return outStr;';
         return code;
     }
+
 	// 把传来的data转成内部变量
     cores.prototype.dataToVars = function (data) {
-        var varArr = Object.keys(data || {}).sort();
+        var varArr = tool.keys(data || {}).sort();
         var vars = ''; // 把传来的data转成内部变量，不用with，提高性能
         while (varArr.length) {
             var vs = varArr.shift();
@@ -170,7 +176,7 @@
         string =  /input|textarea/i.test(dom.nodeName) ? dom.value : dom.innerHTML;
         return jetpl(string).render(data);
     };
-	jetpl.version = "1.2";
+	jetpl.version = "1.3";
 
     return jetpl;
 });
