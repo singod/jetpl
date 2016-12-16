@@ -34,43 +34,43 @@
      <div class="test"  style="margin-top:25px;" id="content"></div>
 </div>
 <script id="testData" type="text/tpl">
-    <h2 class="f18">标题: <p onclick="go('<%= intro %>')"></p></h2>
-	<p><%= jetpl.escape(desc) %></p>
-	<p><%= sex==2 ? '男': '女' %></p>
-	<% var vs=100; %>
-    <% for (var i=0;i<list.length;i++) { %>
-		<% for (var k=0;k<list[i].childmenu.length;k++) { %>
-			<li><%= i %>. <%= list[i].childmenu[k].name %> --- ID：<%= list[i].childmenu[k].id %> ---- 时间：<%= jetpl.date(list[i].childmenu[k].time,"YYYY-MM-DD h:m:s") %>
+    <h2 class="f18">标题: <p onclick="go('{%= intro %}')"></p></h2>
+	<p>{%= jetpl.escape(desc) %}</p>
+	<p>{%= sex==2 ? '男': '女' %}</p>
+	{% var vs=100; %}
+    {% for (var i=0;i<list.length;i++) { %}
+		{% for (var k=0;k<list[i].childmenu.length;k++) { %}
+			<li>{%= i %}. {%= list[i].childmenu[k].name %} --- ID：{%= list[i].childmenu[k].id %} ---- 时间：{%= jetpl.date(list[i].childmenu[k].time,"YYYY-MM-DD h:m:s") %}
 			</li>	
-		<% } %>
-	<% } %>
+		{% } %}
+	{% } %}
 
 </script>
 <script id="list" type="text/tpl">
-<h2  class="f18"><% intro %></h2>
+<h2  class="f18">{% intro %}</h2>
 
 <ul>
-    <% var vs='(each循环)'; %>
+    {% var vs='(each循环)'; %}
     {{each list val i}}
 	    {{each val.childmenu vals k}}
 		    <li>
-			<span><%=i%>. </span>
-			<span>标题: <%=vals.name%>---- &nbsp;&nbsp;&nbsp;</span>
-			<span>ID： <%= vals.id %> ---- &nbsp;&nbsp;&nbsp;</span>
-			<span>time： <%= jetpl.date(vals.time,"YYYY-MM-DD") %>  &nbsp;&nbsp;&nbsp;<%=vs%></span>	
+			<span>{%=i%}. </span>
+			<span>标题: {%=vals.name%}---- &nbsp;&nbsp;&nbsp;</span>
+			<span>ID： {%= vals.id %} ---- &nbsp;&nbsp;&nbsp;</span>
+			<span>time： {%= jetpl.date(vals.time,"YYYY-MM-DD") %}  &nbsp;&nbsp;&nbsp;{%=vs%}</span>	
 			</li>
 		{{/each}}
 	{{/each}}
 </ul>
 </script>
 <script id="contentData" type="text/tpl">
-    <h2 class="f18">标题: <%= title %></h2>
+    <h2 class="f18">标题: {%= title %}</h2>
 
-    <% for (var i=0;i<list.length;i++) { %>
+    {% for (var i=0;i<list.length;i++) { %}
 
-			<span><%= i %>. <%= list[i] %> &nbsp;&nbsp;</span>	
+			<span>{%= i %}. {%= list[i] %} &nbsp;&nbsp;</span>	
 
-	<% } %>
+	{% } %}
 
 </script>
 <script type="text/javascript">
