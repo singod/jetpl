@@ -1,21 +1,30 @@
 /*
 
- @Name：jetpl v1.3 JS模板引擎
+ @Name：jetpl v1.4 JS模板引擎
  @Author：陈国军
- @Date：2016-11-2
+ @Date：2016-12-16
  @QQ群：516754269
  @官网：http://www.jayui.com/jetpl/  或　 https://github.com/singod/jetpl　
         
 */
 ;(function(root, factory) {
-    if (typeof define === "function" && define.amd) {
-        define([ "jetpl" ], factory);
-    } else if (typeof exports === "object") {
-        module.exports = factory(require("jetpl"));
-    } else {
-        root.jetpl = factory(root.jetpl);
-    }
-})(this, function(jetpl) {
+	var jetpl = factory(root);
+	if (typeof define === 'function' && define.amd) {
+		// AMD
+		define('jetpl', function() { return jetpl;});
+	} else if (typeof exports === 'object') {
+		// Node.js
+		module.exports = jetpl;
+	} else {
+		// Browser globals
+		var _jetpl = root.jetpl;
+		jetpl.noConflict = function() {
+			if (root.jetpl === jetpl) root.jetpl = _jetpl;
+			return jetpl;
+		};
+		root.jetpl = jetpl;
+	}
+}(this, function(root) {
     var cache = {},
     tool = {
         error : function(e, tlog) {
@@ -41,16 +50,16 @@
     cores.prototype.tplCompiler = function (tpl) {
         var tpid = 0; // each 嵌套 for 下标须不同
 
-        var code = tpl
+        var code = tpl.replace(/\s+/g, ' ').replace(/<!--[\w\W]*?-->/g, '')
             // html
-            .replace(/(^|%>|}})([\s\S]*?)({{|<%|$)/g, function(tp, tp1, tp2, tp3) {
+            .replace(/(^|%}|}})([\s\S]*?)({{|{%|$)/g, function(tp, tp1, tp2, tp3) {
                 // html => js string 转义 ' \ \n
                 return tp1 + 'outStr+= "' + tp2.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\r?\n/g, '\\n') + '";\n' + tp3
             })
-            // <%= %>
-            .replace(/(<%=)([\s\S]*?)(%>)/g, 'outStr+= ($2);\n') // <%= %>  [\s\S]允许换行
-            // <% %>
-            .replace(/(<%)(?!=)([\s\S]*?)(%>)/g, '\n$2\n') // <% js code %>  (?!=)不要匹配到<%= %>
+            // {%= %}
+            .replace(/({%=)([\s\S]*?)(%})/g, 'outStr+= ($2);\n') // <%= %>  [\s\S]允许换行
+            // {% %}
+            .replace(/({%)(?!=)([\s\S]*?)(%})/g, '\n$2\n') // <% js code %>  (?!=)不要匹配到<%= %>
             // each
             .replace(/{{each\s*([\w."'\][]+)\s*(\w+)\s*(\w+)?}}/g, function(tp, tp1, tp2, tp3) {
                 var tpi = 'tps' + (tpid++);  
@@ -78,7 +87,7 @@
         var vars = ''; // 把传来的data转成内部变量，不用with，提高性能
         while (varArr.length) {
             var vs = varArr.shift();
-            vars += 'var ' + vs + '= dt["' + vs + '"];';
+            vars += 'var ' + vs + '= jedata["' + vs + '"];';
         }
         return vars;
     }
@@ -92,7 +101,7 @@
 				return cache[tmpl].refuns
 			}
 			var code = cache[tmpl].code || that.tplCompiler(tmpl);
-			var refuns = new Function('dt', vars + code);
+			var refuns = new Function('jedata', vars + code);
 			cache[tmpl].vars = vars;
 			cache[tmpl].code = code;
 			cache[tmpl].refuns = refuns;
@@ -125,23 +134,6 @@
         if (typeof tpl !== "string") return tool.error("Template not found");
         return new cores(tpl);
     };
-
-	// 保留符点数后几位，默认保留两位
-	jetpl.decimal = function(num,pos) {
-		pos = pos ? pos : 2;
-		// 四舍五入
-		var pnum = Math.round(num*Math.pow(10,pos))/Math.pow(10,pos), snum = pnum.toString(), len = snum.indexOf('.');
-		// 如果是整数，小数点位置为-1
-		if(len < 0){
-			len = snum.length;
-			snum += '.';
-		}
-		// 不足位数以零填充
-		while(snum.length <= len+pos){
-			snum += '0';
-		}
-		return snum;
-	};
 	//HTML实体转义 @example (" &lt;div&gt; ABC &lt;/div&gt") => ;<div> ABC </div>
 	jetpl.decode = function (str){
 		return str.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&#39;/g,"'");
@@ -176,7 +168,7 @@
         string =  /input|textarea/i.test(dom.nodeName) ? dom.value : dom.innerHTML;
         return jetpl(string).render(data);
     };
-	jetpl.version = "1.3";
+	jetpl.version = "1.4";
 
     return jetpl;
-});
+}));
